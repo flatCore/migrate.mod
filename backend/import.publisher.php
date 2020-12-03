@@ -95,7 +95,7 @@ if(isset($_POST['import_pub_entries'])) {
 			
 			
 			/* switch category from clean_name to id */
-			$cat_id = $db_mysql->get("fc_categories","cat_id",[
+			$cat_id = $target_db->get("fc_categories","cat_id",[
 				"cat_name_clean" => $entries[$i]['categories']
 			]);
 			
