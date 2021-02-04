@@ -67,6 +67,20 @@ if(isset($_POST['import_pub_entries'])) {
 		$target_db = $db_posts;
 	}
 	
+
+	$last_id = $entries[$cnt_entries-1]['id'];
+	// $last_id is the number of entries created in publisher
+	// we create now empty entries in the new databese according to $last_id
+	// we set 'type' to auto_created, so we can identify the rows later
+	// delete the unused (auto_created) rows
+	
+	for($i=0;$i<=$last_id;$i++) {
+		$data = $target_db->insert("fc_posts", [
+				"post_type" =>  "auto_created"
+		]);
+	}
+	
+	
 	echo '<h5 id="import_pub_entries">... start importing (we found '.$cnt_entries.' entries)</h5>';
 	
 	$all_columns = array_keys($entries[0]);
@@ -104,7 +118,7 @@ if(isset($_POST['import_pub_entries'])) {
 			}
 			
 			
-			$data = $target_db->insert("fc_posts", [
+			$data = $target_db->update("fc_posts", [
 				"post_type" =>  "$type",
 				"post_date" =>  $entries[$i]['date'],
 				"post_releasedate" =>  $entries[$i]['releasedate'],
@@ -141,20 +155,24 @@ if(isset($_POST['import_pub_entries'])) {
 				"post_product_currency" =>  $entries[$i]['product_currency'],
 				"post_product_unit" =>  $entries[$i]['product_unit'],
 				"post_product_amount" =>  $entries[$i]['product_amount'],
+			],[
+				"post_id" => $entries[$i]['id']
 			]);
 		
-		 	$post_id = $target_db->id();
-			if($post_id > 0) {
-			
-			} else {
-					echo '<pre>'.$post_id.'</pre>';
-					echo '<pre>';
-					var_dump($target_db->error());
-					echo '</pre>';
-				}
+		 	$data->rowCount();
+		 	
+			if($data < 1) {
+				echo '<pre>'.$entries[$i]['id'].'</pre>';
+				echo '<pre>';
+				var_dump($target_db->error());
+				echo '</pre>';
 			}
+			
+		}
 
-
+		$target_db->delete("fc_posts", [
+			"post_type" => "auto_created"
+		]);
 }
 
 echo '<div class="row">';
@@ -183,7 +201,7 @@ echo '<div class="form-group">';
 echo '<label>Choose your target database</label>';
 echo '<select name="database" class="form-control custom-select">';
 echo '<option value="mysql">import in MySQL</option>';
-echo '<option value="sqlite">import in content.sqlite3</option>';
+echo '<option value="sqlite">import in posts.sqlite3</option>';
 echo '</select>';
 echo '</div>';
 echo '<input type="submit" name="import_pub_entries" value="Import Entries" class="btn btn-success">';

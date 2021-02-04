@@ -164,7 +164,7 @@ if($_POST['generate_config_file'] == 'generate') {
 /* import user from sqlite */
 
 echo '<fieldset>';
-echo '<legend>migrate SQLite to MySQL (Pages, User, Preferences</legend>';
+echo '<legend>migrate SQLite to MySQL (Pages, Posts, User, Preferences)</legend>';
 
 if(is_file('../content/SQLite/user.sqlite3')) {
 	include 'import.user.php';	
@@ -172,6 +172,10 @@ if(is_file('../content/SQLite/user.sqlite3')) {
 
 if(is_file('../content/SQLite/content.sqlite3')) {
 	include 'import.pages.php';	
+}
+
+if(is_file('../content/SQLite/posts.sqlite3')) {
+	include 'import.posts.php';	
 }
 
 echo '</fieldset>';
