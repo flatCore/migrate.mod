@@ -93,9 +93,9 @@ if($mig_prefs['prefs_database_name'] != '' || $mig_prefs['prefs_database_usernam
 	try {
 		$db_mysql = new Medoo([
 	
-			'database_type' => 'mysql',
-			'database_name' => $mig_prefs['prefs_database_name'],
-			'server' => $mig_prefs['prefs_database_host'],
+			'type' => 'mysql',
+			'database' => $mig_prefs['prefs_database_name'],
+			'host' => $mig_prefs['prefs_database_host'],
 			'username' => $mig_prefs['prefs_database_username'],
 			'password' => $mig_prefs['prefs_database_psw'],
 		 
