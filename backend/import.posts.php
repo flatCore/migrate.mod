@@ -53,7 +53,7 @@ echo '<form action="?tn=moduls&sub=migrate.mod&a=start#import_fc_posts" method="
 
 echo '<p>Import Posts from posts.sqlite3</p>';
 echo '<input type="submit" name="import_fc_posts" value="Import Posts" class="btn btn-success">';
-echo '';
+echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 
 

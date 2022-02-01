@@ -75,7 +75,7 @@ echo '<form action="?tn=moduls&sub=migrate.mod&a=start#import_content" method="P
 
 echo '<p>Import Data from content.sqlite3</p>';
 echo '<input type="submit" name="import_content" value="Import Content" class="btn btn-success">';
-echo '';
+echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 
 

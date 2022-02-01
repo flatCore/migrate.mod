@@ -121,6 +121,7 @@ if($mig_prefs['prefs_database_name'] != '' || $mig_prefs['prefs_database_usernam
 		
 		echo '<form action="?tn=moduls&sub=migrate.mod&a=start" method="POST">';
 		echo '<input type="submit" name="generate_mysql_tables" value="Add Basic MySQL Tables to your Database" class="btn btn-success">';
+		echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 		echo '</form><hr>';
 				
 		if(isset($_POST['generate_mysql_tables'])) {
